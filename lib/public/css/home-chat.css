@@ -6,32 +6,38 @@
    .home-chat-frame (rounded card with header / messages / input).
    Inspired by Vercel's persistent toolbar pattern. */
 
-/* --- FAB --- */
+/* --- FAB ---
+   Draggable. Default position is bottom-right; user position is
+   restored from localStorage. Inline `top`/`left` set by JS override
+   the default `right`/`bottom`. */
 
 .clay-fab {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
-  width: 56px;
-  height: 56px;
+  right: 18px;
+  bottom: 18px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   background: var(--bg, #fff);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.08);
+  cursor: grab;
   z-index: 9000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: transform 0.18s cubic-bezier(.2,.7,.3,1.3), box-shadow 0.18s, opacity 0.18s;
+  transition: box-shadow 0.18s, opacity 0.18s, transform 0.18s cubic-bezier(.2,.7,.3,1.3);
+  user-select: none;
+  touch-action: none;
 }
 .clay-fab:hover {
-  transform: translateY(-1px) scale(1.04);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22), 0 3px 6px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.10);
 }
-.clay-fab:active {
-  transform: scale(0.96);
+.clay-fab.dragging {
+  cursor: grabbing;
+  transition: none;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26), 0 4px 8px rgba(0, 0, 0, 0.14);
 }
 .clay-fab.open {
   /* Hide while popover is open — the popover X button is the close path */
@@ -41,8 +47,8 @@
 }
 
 .clay-fab-icon {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
   pointer-events: none;
@@ -68,16 +74,16 @@
 
 .clay-popover {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
-  width: 380px;
-  height: 560px;
+  right: 18px;
+  bottom: 18px;
+  width: 320px;
+  height: 480px;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 40px);
   z-index: 9001;
   display: flex;
   transform-origin: bottom right;
-  animation: clay-popover-in 0.22s cubic-bezier(.2,.7,.3,1.05);
+  animation: clay-popover-in 0.18s cubic-bezier(.2,.7,.3,1.05);
 }
 .clay-popover.hidden {
   display: none;
@@ -326,16 +332,20 @@
    inset, and the FAB shrinks slightly. */
 
 @media (max-width: 768px) {
-  /* Lift the FAB above the mobile tab bar (56px + safe-bottom). */
-  .clay-fab {
+  /* Lift the FAB above the mobile tab bar (56px + safe-bottom).
+     Only applies when JS hasn't placed the FAB at a custom position
+     (custom positions use inline top/left and override these defaults). */
+  .clay-fab:not(.user-positioned) {
     right: 14px;
     bottom: calc(56px + var(--safe-bottom, 0px) + 14px);
-    width: 50px;
-    height: 50px;
+  }
+  .clay-fab {
+    width: 44px;
+    height: 44px;
   }
   .clay-fab-icon {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
   }
 }
 
