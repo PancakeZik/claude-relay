@@ -1,3 +1,10 @@
+## [2.36.2-beta.8](https://github.com/chadbyte/clay/compare/v2.36.2-beta.7...v2.36.2-beta.8) (2026-05-07)
+
+
+### Bug Fixes
+
+* **ui:** clear pre-thinking dots on more turn events and add 90s safety timeout ([5d91bc2](https://github.com/chadbyte/clay/commit/5d91bc2ec43c823c1844323870c7175049212abc))
+
 ## [2.36.2-beta.7](https://github.com/chadbyte/clay/compare/v2.36.2-beta.6...v2.36.2-beta.7) (2026-05-05)
 
 
