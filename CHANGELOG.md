@@ -1,3 +1,10 @@
+# [2.37.0-beta.2](https://github.com/chadbyte/clay/compare/v2.37.0-beta.1...v2.37.0-beta.2) (2026-05-07)
+
+
+### Bug Fixes
+
+* **scroll:** respect user scroll-up during streaming response ([c440820](https://github.com/chadbyte/clay/commit/c440820b92bbd7709228b1aac0881f0a63a73a80))
+
 # [2.37.0-beta.1](https://github.com/chadbyte/clay/compare/v2.36.2-beta.9...v2.37.0-beta.1) (2026-05-07)
 
 
