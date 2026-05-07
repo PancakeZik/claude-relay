@@ -2,52 +2,21 @@
    Home Hub — Personalized command center & dashboard
    ========================================================================== */
 
-/* Hub covers #main-area (sidebar + chat), sits inside it with absolute */
+/* Hub covers #main-area (sidebar + chat), sits inside it with absolute.
+   Internally it splits into a Clay chat panel on the left and the
+   existing widget column on the right. See home-chat.css for the chat
+   panel styling. */
 #home-hub {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: auto;
+  flex-direction: row;
+  align-items: stretch;
+  overflow: hidden;
   background: var(--bg);
   z-index: 200;
-  padding: 48px 24px 40px;
   border-top-left-radius: 8px;
   animation: hubFadeIn 0.35s ease;
-}
-
-/* Clay home: split layout. The hub sits on the right half as a side panel,
-   the chat (Clay DM) occupies the left. The body class is toggled by
-   showHomeHub / hideHomeHub when a Clay mate exists for the user. */
-body.clay-home-split #home-hub {
-  inset: 0 0 0 auto;
-  width: 50%;
-  min-width: 360px;
-  max-width: 720px;
-  border-left: 1px solid var(--border);
-  z-index: 5;          /* sit alongside the chat, not over it */
-  padding: 32px 20px 32px;
-  border-top-left-radius: 0;
-  animation: hubSlideInRight 0.25s ease;
-}
-@media (max-width: 900px) {
-  /* Below 900px there isn't room for a meaningful split; collapse back
-     to the legacy full-overlay hub for narrow viewports. */
-  body.clay-home-split #home-hub {
-    inset: 0;
-    width: auto;
-    max-width: none;
-    min-width: 0;
-    border-left: none;
-    z-index: 200;
-    padding: 48px 24px 40px;
-    border-top-left-radius: 8px;
-  }
-}
-@keyframes hubSlideInRight {
-  from { transform: translateX(8px); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
 }
 /* Close button (X / ESC) */
 .home-hub-close-btn {

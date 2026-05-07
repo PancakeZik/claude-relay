@@ -115,6 +115,39 @@
   <!-- === Main Area (sidebar + resize-handle + main-column) === -->
   <div id="main-area">
     <div id="home-hub" class="hidden">
+      <!-- Clay chat panel: phablet-style, self-contained. Talks to the
+           user's Clay mate via dedicated WS messages (home_clay_*) and
+           does not interfere with the active project session. -->
+      <div id="home-chat-pane" class="home-chat-pane">
+        <div class="home-chat-frame">
+          <div class="home-chat-header">
+            <div class="home-chat-avatar-wrap">
+              <img class="home-chat-avatar" src="/icon-banded-76.png" alt="Clay">
+            </div>
+            <div class="home-chat-title-block">
+              <div class="home-chat-title">Clay</div>
+              <div class="home-chat-subtitle">Your workspace memory</div>
+            </div>
+            <button id="home-chat-new-btn" class="home-chat-icon-btn" title="Start a new conversation" aria-label="New conversation">
+              <i data-lucide="plus"></i>
+            </button>
+          </div>
+          <div id="home-chat-messages" class="home-chat-messages">
+            <!-- messages rendered by home-chat.js -->
+          </div>
+          <div class="home-chat-typing hidden" id="home-chat-typing">
+            <span class="home-chat-typing-dot"></span>
+            <span class="home-chat-typing-dot"></span>
+            <span class="home-chat-typing-dot"></span>
+          </div>
+          <div class="home-chat-input-row">
+            <textarea id="home-chat-input" class="home-chat-input" rows="1" placeholder="Ask Clay…" autocomplete="off"></textarea>
+            <button id="home-chat-send-btn" class="home-chat-send-btn" disabled aria-label="Send">
+              <i data-lucide="arrow-up"></i>
+            </button>
+          </div>
+        </div>
+      </div>
       <button id="home-hub-close" class="home-hub-close-btn hidden">
         <i data-lucide="x"></i>
         <span>ESC</span>
