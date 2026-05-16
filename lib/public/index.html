@@ -2294,48 +2294,7 @@
   </div>
 </div>
 
-<!-- === Clay FAB + Popover ===
-     Persistent floating-action button (bottom-right) that opens a
-     phablet-style chat with Clay (the host agent). The popover overlays
-     the page content and does NOT interfere with the active project
-     session — talks via dedicated home_clay_* WS messages. -->
-<button id="clay-fab" class="clay-fab" type="button" aria-label="Open Clay" title="Ask Clay">
-  <img class="clay-fab-icon" src="/icon-banded-76.png" alt="Clay">
-  <span class="clay-fab-pulse"></span>
-</button>
-
-<div id="clay-popover" class="clay-popover hidden" role="dialog" aria-modal="false" aria-labelledby="home-chat-title-text">
-  <div class="home-chat-frame">
-    <div class="home-chat-header">
-      <div class="home-chat-avatar-wrap">
-        <img class="home-chat-avatar" src="/icon-banded-76.png" alt="Clay">
-      </div>
-      <div class="home-chat-title-block">
-        <div class="home-chat-title" id="home-chat-title-text">Clay</div>
-        <div class="home-chat-subtitle">Your workspace memory</div>
-      </div>
-      <button id="home-chat-new-btn" class="home-chat-icon-btn" title="Start a new conversation" aria-label="New conversation">
-        <i data-lucide="plus"></i>
-      </button>
-      <button id="home-chat-close-btn" class="home-chat-icon-btn" title="Close" aria-label="Close">
-        <i data-lucide="x"></i>
-      </button>
-    </div>
-    <div id="home-chat-messages" class="home-chat-messages">
-      <!-- messages rendered by home-chat.js -->
-    </div>
-    <div class="home-chat-typing hidden" id="home-chat-typing">
-      <span class="home-chat-typing-dot"></span>
-      <span class="home-chat-typing-dot"></span>
-      <span class="home-chat-typing-dot"></span>
-    </div>
-    <div class="home-chat-input-row">
-      <textarea id="home-chat-input" class="home-chat-input" rows="1" placeholder="Ask Clay…" autocomplete="off"></textarea>
-      <button id="home-chat-send-btn" class="home-chat-send-btn" disabled aria-label="Send">
-        <i data-lucide="arrow-up"></i>
-      </button>
-    </div>
-  </div>
-</div>
+<!-- Clay FAB + popover disabled. Markup intentionally removed; assets
+     (home-chat.js / home-chat.css) remain in repo for future re-enable. -->
 </body>
 </html>
