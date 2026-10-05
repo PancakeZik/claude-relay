@@ -50,6 +50,7 @@
   "author": "Chad",
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.2.132",
+    "@earendil-works/pi-coding-agent": "1.0.3",
     "@lydell/node-pty": "^1.2.0-beta.3",
     "@openai/codex": "^0.124.0",
     "imapflow": "^1.3.1",
