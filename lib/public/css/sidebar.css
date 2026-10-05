@@ -1540,6 +1540,25 @@
   background: var(--sidebar-bg);
 }
 
+/* Single-user mode: replace profile with a simple Preferences label */
+body:not(.is-multi-user) .user-island-profile .user-island-avatar,
+body:not(.is-multi-user) .user-island-profile .user-island-name,
+body:not(.is-multi-user) .user-island-profile .user-island-cta {
+  display: none;
+}
+
+body:not(.is-multi-user) .user-island-profile::before {
+  content: "Preferences";
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0 8px;
+}
+
+body:not(.is-multi-user) .user-island-profile:hover::before {
+  color: var(--text);
+}
+
 .user-island-profile {
   display: flex;
   align-items: center;
