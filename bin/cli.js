@@ -33,7 +33,7 @@ if (_isDev || process.argv.includes("--debug")) {
 }
 
 var crypto = require("crypto");
-var { loadConfig, saveConfig, configPath, socketPath, logPath, ensureConfigDir, isDaemonAlive, isDaemonAliveAsync, generateSlug, clearStaleConfig, loadClayrc, saveClayrc, readCrashInfo, REAL_HOME } = require("../lib/config");
+var { loadConfig, saveConfig, configPath, socketPath, logPath, ensureConfigDir, isDaemonAlive, isDaemonAliveAsync, isPidAlive, generateSlug, clearStaleConfig, loadClayrc, saveClayrc, readCrashInfo, REAL_HOME } = require("../lib/config");
 var { sendIPCCommand } = require("../lib/ipc");
 var { generateAuthToken } = require("../lib/server");
 var { enableMultiUser, disableMultiUser, hasAdmin, isMultiUser, getSetupCode } = require("../lib/users");
@@ -65,6 +65,7 @@ var removePath = null;
 var listMode = false;
 var dangerouslySkipPermissions = true;
 var headlessMode = false;
+var foregroundMode = true;
 var watchMode = false;
 var host = null;
 var multiUserMode = false;
@@ -114,7 +115,10 @@ for (var i = 0; i < args.length; i++) {
     listMode = true;
   } else if (args[i] === "--headless") {
     headlessMode = true;
+    foregroundMode = false;
     autoYes = true;
+  } else if (args[i] === "--detach") {
+    foregroundMode = false;
   } else if (args[i] === "--dangerously-skip-permissions") {
     dangerouslySkipPermissions = true;
   } else if (args[i] === "--multi-user") {
@@ -142,7 +146,8 @@ for (var i = 0; i < args.length; i++) {
     console.log("  --add <path>       Add a project directory (use '.' for current)");
     console.log("  --remove <path>    Remove a project directory");
     console.log("  --list             List all registered projects");
-    console.log("  --headless         Start daemon and exit immediately (implies --yes)");
+    console.log("  --headless         Start daemon detached and exit immediately (implies --yes)");
+  console.log("  --detach           Run daemon detached in the background (default: foreground)");
     console.log("  --multi-user       Start in multi-user mode (use with --yes for headless)");
     console.log("  --os-users         Enable OS-level user isolation (Linux, requires root + --multi-user)");
     console.log("  --dangerously-skip-permissions");
@@ -482,10 +487,12 @@ async function restartDaemonFromConfig() {
   newConfig.pid = child.pid;
   saveConfig(newConfig);
 
-  // Wait and verify (retry up to 5 seconds)
+  // Wait and verify (up to 30s, bail early if PID dies)
   var alive = false;
-  for (var rc = 0; rc < 10; rc++) {
+  var pollDeadline = Date.now() + 30000;
+  while (Date.now() < pollDeadline) {
     await new Promise(function (resolve) { setTimeout(resolve, 500); });
+    if (!isPidAlive(newConfig.pid)) break;
     alive = await isDaemonAliveAsync(newConfig);
     if (alive) break;
   }
@@ -1553,7 +1560,7 @@ async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
   var daemonScript = path.join(__dirname, "..", "lib", "daemon.js");
 
   // Debug mode: run in foreground with logs to stdout
-  if (debugMode) {
+  if (debugMode || foregroundMode) {
     process.env.CLAY_CONFIG = configPath();
     config.pid = process.pid;
     saveConfig(config);
@@ -1579,17 +1586,19 @@ async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
   config.pid = child.pid;
   saveConfig(config);
 
-  // Wait for daemon to start (retry up to 5 seconds)
+  // Wait for daemon to start (up to 30s, bail early if PID dies)
   var alive = false;
-  for (var attempt = 0; attempt < 10; attempt++) {
+  var pollDeadline = Date.now() + 30000;
+  while (Date.now() < pollDeadline) {
     await new Promise(function (resolve) { setTimeout(resolve, 500); });
+    if (!isPidAlive(child.pid)) break;
     alive = await isDaemonAliveAsync(config);
     if (alive) break;
   }
   if (!alive) {
     log(a.red + "Failed to start daemon. Check logs:" + a.reset);
     log(a.dim + logFile + a.reset);
-    clearStaleConfig();
+    if (!isPidAlive(child.pid)) clearStaleConfig();
     process.exit(1);
     return;
   }
@@ -1905,8 +1914,10 @@ async function restartDaemonWithTLS(config, callback) {
   saveConfig(newConfig);
 
   var alive = false;
-  for (var ra = 0; ra < 10; ra++) {
+  var tlsPollDeadline = Date.now() + 30000;
+  while (Date.now() < tlsPollDeadline) {
     await new Promise(function (resolve) { setTimeout(resolve, 500); });
+    if (!isPidAlive(newConfig.pid)) break;
     alive = await isDaemonAliveAsync(newConfig);
     if (alive) break;
   }
