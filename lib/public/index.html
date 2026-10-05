@@ -105,7 +105,7 @@
       <div class="skeleton-icon-strip-item"></div>
     </div>
     <button class="icon-strip-add" id="icon-strip-add" title="Add project"><i data-lucide="plus"></i></button>
-    <div class="icon-strip-mate-section" id="icon-strip-mate-section">
+    <div class="icon-strip-mate-section" id="icon-strip-mate-section" style="display:none">
       <button type="button" class="icon-strip-hint hidden" id="icon-strip-hint-mate" data-switcher-mode="mate" aria-label="Switch mate"></button>
       <div class="icon-strip-users hidden" id="icon-strip-users"></div>
     </div>
@@ -125,7 +125,7 @@
           <p id="hub-greeting-date"></p>
         </div>
 
-        <div id="home-hub-mates" class="home-hub-mates hidden"></div>
+        <div id="home-hub-mates" class="home-hub-mates hidden" style="display:none"></div>
 
         <div class="hub-columns">
           <div class="hub-card hub-upcoming">
@@ -357,7 +357,7 @@
       <canvas id="ascii-logo-canvas"></canvas>
       <p id="connect-overlay-msg">Reconnecting to server…</p>
     </div>
-    <div id="sticky-notes-container" class="hidden"></div>
+    <div id="sticky-notes-container" class="hidden" style="display:none !important"></div>
     <div id="debate-info-float" class="hidden"></div>
     <div id="messages"></div>
 
@@ -459,17 +459,6 @@
               <button id="input-more-btn" type="button" aria-label="More options" title="More options" class="mobile-only"><i data-lucide="plus"></i></button>
               <button id="attach-file-btn" type="button" aria-label="Attach file" title="Attach file" class="desktop-only"><i data-lucide="paperclip"></i></button>
               <button id="attach-image-btn" type="button" aria-label="Attach image" title="Attach image" class="desktop-only"><i data-lucide="image"></i></button>
-              <button id="stt-btn" type="button" aria-label="Voice input" title="Voice input"><i data-lucide="mic"></i></button>
-              <button id="schedule-btn" type="button" aria-label="Schedule message" title="Schedule message"><i data-lucide="clock"></i></button>
-              <button id="ask-mate-btn" type="button" aria-label="Ask Mate" title="Ask a Mate for advice on this session"><i data-lucide="at-sign"></i></button>
-              <div id="context-sources-btn-wrap" class="desktop-only">
-                <button id="context-sources-add" type="button" title="Add context sources"><i data-lucide="library"></i><span class="ctx-label">Context</span></button>
-                <div id="context-sources-picker" class="hidden">
-                  <div class="context-picker-section" id="context-picker-email"></div>
-                  <div class="context-picker-section" id="context-picker-terminals"></div>
-                  <div class="context-picker-section" id="context-picker-tabs"></div>
-                </div>
-              </div>
             </div>
             <div id="input-bottom-right">
               <div id="vendor-toggle-wrap">
@@ -557,16 +546,6 @@
           <i data-lucide="image"></i>
           <span>Image</span>
         </button>
-      </div>
-      <div class="input-more-divider"></div>
-      <div class="input-more-section-label">
-        <i data-lucide="library"></i>
-        <span>Context sources</span>
-      </div>
-      <div class="input-more-context-body" id="input-more-context-body">
-        <div class="context-picker-section" id="context-picker-email-mobile"></div>
-        <div class="context-picker-section" id="context-picker-terminals-mobile"></div>
-        <div class="context-picker-section" id="context-picker-tabs-mobile"></div>
       </div>
     </div>
   </div>
