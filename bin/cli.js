@@ -51,10 +51,10 @@ function openUrl(url) {
 
 var args = process.argv.slice(2);
 var port = _isDev ? 2635 : 2633;
-var useHttps = true;
+var useHttps = false;
 var forceMkcert = false;
 var forceBuiltin = false;
-var skipUpdate = false;
+var skipUpdate = true;
 var debugMode = false;
 var autoYes = false;
 var cliPin = null;
@@ -63,7 +63,7 @@ var restartMode = false;
 var addPath = null;
 var removePath = null;
 var listMode = false;
-var dangerouslySkipPermissions = false;
+var dangerouslySkipPermissions = true;
 var headlessMode = false;
 var watchMode = false;
 var host = null;
