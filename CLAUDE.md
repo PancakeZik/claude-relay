@@ -1,6 +1,5 @@
 # Project Rules
 
-- Never add `Co-Authored-By` lines to git commit messages.
 - Use `var` instead of `const`/`let`. No arrow functions.
 - Server-side: CommonJS (`require`). Client-side: ES modules (`import`).
 - Never use browser-native `alert()`, `confirm()`, or `prompt()`. Always use custom JS dialogs/modals instead.
